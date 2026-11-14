@@ -1,6 +1,7 @@
 import { createHash, randomBytes } from 'node:crypto';
 
-import argon2 from 'argon2';
+// import argon2 from 'argon2';
+import bcrypt from 'bcryptjs';
 
 import { config } from './config';
 import { getDb } from './db';
@@ -43,20 +44,38 @@ export async function getAdminPasswordHash(): Promise<string | null> {
 
 export async function verifyPassword(password: string): Promise<boolean> {
   const passwordHash = await getAdminPasswordHash();
-
   if (!passwordHash) {
     return false;
   }
 
+
+// export async function verifyPassword(password: string): Promise<boolean> {
+//   const passwordHash = await getAdminPasswordHash();
+
+//   if (!passwordHash) {
+//     return false;
+//   }
+
+  // try {
+  //   return await argon2.verify(passwordHash, password);
+  // } catch {
+  //   return false;
+  // }
+
   try {
-    return await argon2.verify(passwordHash, password);
-  } catch {
-    return false;
-  }
+  return await bcrypt.compare(password, passwordHash);
+} catch {
+  return false;
+}
 }
 
+// export async function hashPassword(password: string): Promise<string> {
+//   return argon2.hash(password, { type: argon2.argon2id });
+// }
+
+
 export async function hashPassword(password: string): Promise<string> {
-  return argon2.hash(password, { type: argon2.argon2id });
+  return bcrypt.hash(password, 10);
 }
 
 export function hashSessionToken(token: string): string {

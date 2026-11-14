@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'REACH2',
+  title: '.',
   description: 'Shaxsiy fayl va xabar uzatish tizimi.',
 };
 

@@ -1,6 +1,8 @@
 import { randomInt } from 'node:crypto';
 
-import argon2 from 'argon2';
+// import argon2 from 'argon2';
+
+import bcrypt from 'bcryptjs';
 import { createTransport } from 'nodemailer';
 
 import { config } from './config';
@@ -26,7 +28,9 @@ export async function recordFailedLogin(): Promise<boolean> {
   }
 
   const code = String(randomInt(0, 1_000_000)).padStart(6, '0');
-  const codeHash = await argon2.hash(code, { type: argon2.argon2id });
+  // const codeHash = await argon2.hash(code, { type: argon2.argon2id });
+const codeHash = await hashPassword(code);
+
   const claimed = await sql`
     UPDATE admin_recovery_state
     SET recovery_code_hash = ${codeHash},
@@ -118,7 +122,8 @@ export async function resetAdminPasswordWithCode(code: string, password: string)
   let validCode = false;
 
   try {
-    validCode = await argon2.verify(storedCodeHash, code);
+    // validCode = await argon2.verify(storedCodeHash, code);
+    validCode = await bcrypt.compare(code, storedCodeHash);
   } catch {
     validCode = false;
   }
