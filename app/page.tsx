@@ -459,9 +459,53 @@ export default function HomePage() {
     }
   }
 
-  if (authenticated === null) {
-    return <main className="page-shell"><p className="status">Tekshirilmoqda...</p></main>;
-  }
+  // if (authenticated === null) {
+  //   return <main className="page-shell"><p className="status">Tekshirilmoqda...</p></main>;
+  // }
+
+
+
+
+
+if (authenticated === null) {
+  return (
+    <main className="page-shell" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#fafafa' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+        {/* Zamonaviy ikki qatlamli aylanma spinner */}
+        <div style={{ position: 'relative', width: '42px', height: '42px' }}>
+          <div style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            border: '3px solid #e2e8f0',
+            borderRadius: '50%'
+          }} />
+          <div style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            border: '3px solid transparent',
+            borderTopColor: '#2563eb',
+            borderRadius: '50%',
+            animation: 'modernSpin 0.7s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+          }} />
+        </div>
+        <span style={{ fontSize: '13px', color: '#64748b', fontWeight: '500', letterSpacing: '0.3px' }}></span>
+      </div>
+      <style jsx global>{`
+        @keyframes modernSpin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+    </main>
+  );
+}
+
+
+
+
+
 
   if (!authenticated) {
     return (
@@ -551,7 +595,7 @@ export default function HomePage() {
             <form className="stack" onSubmit={login}>
               <label>
                 
-                <input type="password" placeholder="Parolni kiriting agar bilmasangiz Abbosdan so'rang" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+                <input type="password" placeholder="Parolni kiriting bilmasangiz Abbosdan so'rang" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />
               </label>
               <button type="submit" disabled={busy}>{busy ? 'Tekshirilmoqda...' : 'Kirish'}</button>
             </form>
