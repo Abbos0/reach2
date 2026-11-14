@@ -57,13 +57,21 @@ export default function HomePage() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    fetch('/api/auth/session', { cache: 'no-store' })
-      .then((response) => setAuthenticated(response.ok))
-      .catch(() => setAuthenticated(false));
+  // useEffect(() => {
+  //   fetch('/api/auth/session', { cache: 'no-store' })
+  //     .then((response) => setAuthenticated(response.ok))
+  //     .catch(() => setAuthenticated(false));
 
-    fetchNotesData();
-  }, []);
+  //   fetchNotesData();
+  // }, []);
+
+
+
+  useEffect(() => {
+  // Sahifa har safar yangilanganda darhol logout qilamiz va parolni so'ratamiz
+  logout();
+  fetchNotesData();
+}, []);
 
   // 5 daqiqa harakatsizlik (inactivity) taymeri
   useEffect(() => {
@@ -575,7 +583,6 @@ export default function HomePage() {
               </svg>
               Eslatmalar
             </button>
-            <button className="secondary-button" type="button" onClick={logout}>Chiqish</button>
           </div>
         </header>
 
