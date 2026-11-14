@@ -595,7 +595,25 @@ if (authenticated === null) {
             <form className="stack" onSubmit={login}>
               <label>
                 
-                <input type="password" placeholder="Parolni kiriting bilmasangiz Abbosdan so'rang" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+                {/* <input type="password" placeholder="Parolni kiriting bilmasangiz Abbosdan so'rang" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required /> */}
+
+
+
+
+                <input 
+  type="password" 
+  placeholder="Parolni kiriting agar bilmasangiz Abbosdan so'rang" 
+  autoComplete="new-password" 
+  data-lpignore="true"
+  aria-autocomplete="none"
+  value={password} 
+  onChange={(event) => setPassword(event.target.value)} 
+  required 
+/>
+
+
+
+
               </label>
               <button type="submit" disabled={busy}>{busy ? 'Tekshirilmoqda...' : 'Kirish'}</button>
             </form>
